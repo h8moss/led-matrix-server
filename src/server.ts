@@ -1,7 +1,6 @@
-import express from "express";
-import {stat, readFile} from 'fs/promises';
-import {config} from 'dotenv';
-import runProcess from "./util/runProcess";
+import express from 'express';
+import { config } from 'dotenv';
+import runProcessSudo from './util/runProcessSudo';
 
 config();
 
@@ -15,10 +14,10 @@ app.get('/', (req, res) => {
 });
 
 // API
-app.post('/api/set-time', async (req, res) => {
-  await runProcess(`sudo ${ledMatrixLocation}/bin/date-time/date_time.out`);
+app.get('/api/set-time', async (req, res) => {
+  await runProcessSudo(`${ledMatrixLocation}/bin/date-time/date_time.out`);
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 });
