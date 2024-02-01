@@ -15,7 +15,13 @@ app.get('/', (req, res) => {
 
 // API
 app.get('/api/set-time', async (req, res) => {
-  await runProcessSudo(`${ledMatrixLocation}/bin/date-time/date_time.out`);
+  try {
+    await runProcessSudo(`${ledMatrixLocation}/bin/date-time/date_time.out`);
+    res.json({ success: false });
+  } catch (e) {
+    console.error(e);
+    res.json({ success: false });
+  }
 });
 
 app.listen(port, () => {
