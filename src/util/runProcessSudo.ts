@@ -3,9 +3,9 @@ import { writeFile } from 'fs/promises';
 import { processLocation } from '../constants';
 import killProcess from './killProcess';
 
-const runProcessSudo = async (command: string) => {
+const runProcessSudo = async (command: string[]) => {
   await killProcess();
-  const childProcess = spawn('sudo ' + command);
+  const childProcess = spawn('sudo', command);
 
   childProcess.stdout.on('data', (data) => {
     childProcess.stdin.write(process.env.PASSWORD + '\r\n');

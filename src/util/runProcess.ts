@@ -3,9 +3,9 @@ import { writeFile } from 'fs/promises';
 import { processLocation } from '../constants';
 import killProcess from './killProcess';
 
-const runProcess = async (command: string) => {
+const runProcess = async (command: string, args?: string[] | undefined) => {
   await killProcess();
-  const process = spawn(command);
+  const process = spawn(command, args);
   const pid = process.pid;
   if (pid === undefined) throw `Error running command ${command}`;
   process.disconnect();

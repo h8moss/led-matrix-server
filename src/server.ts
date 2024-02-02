@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
 app.get('/api/set-time', (req, res) => {
   (async () => {
     try {
-      await runProcessSudo(
-        `${ledMatrixLocation}/bin/modules/time-date/time_date.out`
-      );
+      await runProcessSudo([
+        `${ledMatrixLocation}/bin/modules/time-date/time_date.out`,
+      ]);
       return { success: true };
     } catch (e) {
       console.error(e);
