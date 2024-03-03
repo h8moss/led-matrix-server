@@ -10,7 +10,7 @@ const ledMatrixLocation = process.env.LED_MATRIX_LOCATION;
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Hello world');
+  res.send(`<html><body><a href="/api/set-time">set time</a></body></html>`);
 });
 
 // API
