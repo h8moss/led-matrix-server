@@ -1,7 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
-import runProcessSudo from './util/runProcessSudo';
-import killProcess from './util/killProcess';
+import ProcessManager from './util/processManager';
 
 config();
 
@@ -9,24 +8,30 @@ const port = process.env.PORT || 5000;
 const ledMatrixLocation = process.env.LED_MATRIX_LOCATION;
 
 const app = express();
+const processManager = new ProcessManager();
 
 app.get('/', (req, res) => {
-  res.send(
-    `<html><body><a href="/api/set-time">set time</a><a href="/api/kill-all">Kill</a></body></html>`
-  );
+  res.send(`
+<html>
+  <body>
+    <a href="/api/set-time">set time</a>
+    <a href="/api/kill-all">Kill</a>
+  </body>
+</html>
+`);
 });
 
 // API
 app.get('/api/set-time', (req, res) => {
   (async () => {
     try {
-      await runProcessSudo(app, [
-        `${ledMatrixLocation}/bin/modules/time-date/time_date.out`,
+      processManager.runProcess([
+        `${ledMatrixLocation}/bin/modules/time_date.out`,
       ]);
       return { success: true };
     } catch (e) {
-      console.error(e);
-      return { success: false };
+      console.error({ setTimeError: e });
+      return { success: false, error: e };
     }
   })().then((v) => res.json(v));
 });
@@ -34,15 +39,15 @@ app.get('/api/set-time', (req, res) => {
 app.get('/api/kill-all', (req, res) => {
   (async () => {
     try {
-      await killProcess(app);
+      processManager.killProcess();
       return { success: true };
     } catch (e) {
-      console.error(e);
-      return { success: false };
+      console.error({ killAllError: e });
+      return { success: false, error: e };
     }
   })().then((v) => res.json(v));
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
