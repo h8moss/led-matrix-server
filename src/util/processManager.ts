@@ -29,7 +29,7 @@ class ProcessManager {
     });
     if (this.currentProcess !== null && this.currentProcess.pid) {
       console.log({
-        killResult: this.currentProcess.kill('SIGTERM'),
+        killResult: this.currentProcess.kill('SIGKILL'),
       });
       this.currentProcess = null;
     }
