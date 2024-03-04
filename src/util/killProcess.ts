@@ -1,5 +1,5 @@
-import {stat, readFile} from 'fs/promises';
-import {processLocation} from '../constants';
+import { stat, readFile } from 'fs/promises';
+import { processLocation } from '../constants';
 
 const killProcess = async () => {
   try {
@@ -9,7 +9,12 @@ const killProcess = async () => {
   }
 
   const pidString = await readFile(processLocation);
-  process.kill(Number.parseInt(pidString.join('').trim()));
-}
+  console.log(`Killing ${pidString} (${pidString.join('').trim()})`);
+  try {
+    process.kill(Number.parseInt(pidString.join('').trim()));
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export default killProcess;
