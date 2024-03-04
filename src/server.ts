@@ -26,7 +26,7 @@ app.get('/api/set-time', (req, res) => {
   (async () => {
     try {
       processManager.runProcess([
-        `${ledMatrixLocation}/bin/modules/time_date/time_date.out`,
+        `${ledMatrixLocation}/bin/modules/time-date/time_date.out`,
       ]);
       return { success: true };
     } catch (e) {
