@@ -1,20 +1,15 @@
-import { stat, readFile } from 'fs/promises';
 import { processLocation } from '../constants';
+import type { Express } from 'express';
+import type { ChildProcessWithoutNullStreams } from 'child_process';
 
-const killProcess = async () => {
-  try {
-    await stat(processLocation);
-  } catch {
-    return;
-  }
+const killProcess = async (app: Express) => {
+  const currentProcess = app.locals
+    .currentProcess as ChildProcessWithoutNullStreams | null;
 
-  const pidString = await readFile(processLocation);
-  console.log(`Killing ${pidString} (${pidString.join('').trim()})`);
-  try {
-    process.kill(Number.parseInt(`${pidString}`.trim()));
-  } catch (e) {
-    console.error(e);
+  if (currentProcess && !currentProcess.killed) {
+    currentProcess.kill();
   }
+  app.locals.currentProcess = null;
 };
 
 export default killProcess;

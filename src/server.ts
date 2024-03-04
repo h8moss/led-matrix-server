@@ -11,14 +11,16 @@ const ledMatrixLocation = process.env.LED_MATRIX_LOCATION;
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send(`<html><body><a href="/api/set-time">set time</a></body></html>`);
+  res.send(
+    `<html><body><a href="/api/set-time">set time</a><a href="/api/kill-all">Kill</a></body></html>`
+  );
 });
 
 // API
 app.get('/api/set-time', (req, res) => {
   (async () => {
     try {
-      await runProcessSudo([
+      await runProcessSudo(app, [
         `${ledMatrixLocation}/bin/modules/time-date/time_date.out`,
       ]);
       return { success: true };
@@ -32,7 +34,7 @@ app.get('/api/set-time', (req, res) => {
 app.get('/api/kill-all', (req, res) => {
   (async () => {
     try {
-      await killProcess();
+      await killProcess(app);
       return { success: true };
     } catch (e) {
       console.error(e);
