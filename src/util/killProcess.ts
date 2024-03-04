@@ -11,7 +11,7 @@ const killProcess = async () => {
   const pidString = await readFile(processLocation);
   console.log(`Killing ${pidString} (${pidString.join('').trim()})`);
   try {
-    process.kill(Number.parseInt(pidString.join('').trim()));
+    process.kill(Number.parseInt(`${pidString}`.trim()));
   } catch (e) {
     console.error(e);
   }
