@@ -23,8 +23,13 @@ class ProcessManager {
   };
 
   killProcess = () => {
+    console.log({
+      currentProcess: this.currentProcess,
+      killed: this.currentProcess?.killed,
+    });
     if (this.currentProcess !== null) {
-      if (!this.currentProcess.killed) this.currentProcess.kill();
+      if (!this.currentProcess.killed)
+        console.log({ killResult: this.currentProcess.kill() });
       this.currentProcess = null;
     }
   };
