@@ -1,6 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
 import runProcessSudo from './util/runProcessSudo';
+import killProcess from './util/killProcess';
 
 config();
 
@@ -20,6 +21,18 @@ app.get('/api/set-time', (req, res) => {
       await runProcessSudo([
         `${ledMatrixLocation}/bin/modules/time-date/time_date.out`,
       ]);
+      return { success: true };
+    } catch (e) {
+      console.error(e);
+      return { success: false };
+    }
+  })().then((v) => res.json(v));
+});
+
+app.get('/api/kill-all', (req, res) => {
+  (async () => {
+    try {
+      await killProcess();
       return { success: true };
     } catch (e) {
       console.error(e);
