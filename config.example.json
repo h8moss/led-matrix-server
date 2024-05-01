@@ -1,0 +1,6 @@
+{
+	"ledmatrixpath": "The path to the led matrix",
+	"fifopath": "The path to the fifo you want to use, if the fifo doesn't exist, the program will create it",
+	"backendport": "The port number for the backend"
+}
+
