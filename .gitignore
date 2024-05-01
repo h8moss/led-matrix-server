@@ -1,0 +1,8 @@
+# build files
+backend/build
+
+# config file
+config.json
+
+# Pipe file
+communication-pipe
