@@ -89,6 +89,19 @@ func main() {
 		fmt.Fprintln(w, `{"error": "", "success": true}`)
 	})
 
+	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, `
+<html>
+	<head><title>TESTER</title></head>
+
+	<form method="POST" action="/set/colors">
+		<input type="submit" >
+	</form>
+</html>
+`)
+
+	})
+
 	fmt.Printf("Listening on port %d\n", config.Backendport)
 
 	http.ListenAndServe(":"+strconv.Itoa(config.Backendport), nil)
