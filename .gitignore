@@ -1,5 +1,6 @@
 # build files
 backend/build
+!backend/build/README.md
 
 # config file
 config.json
