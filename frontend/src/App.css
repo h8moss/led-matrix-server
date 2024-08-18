@@ -1,7 +1,0 @@
-.navbar a {
-  @apply 
-    aspect-square h-6 w-6
-    shadow-md
-    flex justify-center items-center
-  ;
-}
